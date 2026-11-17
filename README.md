@@ -2,7 +2,7 @@
 
 Pay an approved vendor bill in Solana USDC and match its delivery to the invoice. Enter what the vendor is owed, preview the payer's total, and retain a receipt with the MultiHopper transfer ID and recorded chain signatures.
 
-**[Open the interactive demo](https://rawcdn.githack.com/tanav29/remitdesk/81ad7803f28fdd4c97373fb59395c864ed4e3d60/index.html)** · **[Watch the 58-second walkthrough](https://raw.githubusercontent.com/tanav29/remitdesk/main/docs/remitdesk-demo.mp4)** · **[Request a pilot](https://github.com/tanav29/remitdesk/issues/new?template=pilot.yml)**
+**[Open the interactive demo](https://rawcdn.githack.com/tanav29/remitdesk/81ad7803f28fdd4c97373fb59395c864ed4e3d60/index.html)** · **[Watch the 58-second walkthrough](https://rawcdn.githack.com/tanav29/remitdesk/1dbaa829b53140edc7450e97352b83c1ca3aefe7/docs/remitdesk-demo.mp4)** · **[Request a pilot](https://github.com/tanav29/remitdesk/issues/new?template=pilot.yml)**
 
 The public demo keeps sample invoices in the current browser tab. Choose **New invoice**, leave exact delivery selected, preview the quote, simulate payment and download the receipt. The sample ledger and demo video illustrate the workflow. Production customer and volume figures have yet to be established.
 
@@ -42,7 +42,7 @@ The Dockerfile contains the full private service. Build with `docker build -t re
 4. The payer checks the locked quote and reviews each transaction in the wallet. RemitDesk verifies the signed message and payer signature, preserves provider co-signatures, and saves signed bytes before sending. The keeper funding confirmation reaches MultiHopper before the remaining route setup transactions. Resume an interrupted payment from the same invoice and payer.
 5. **Check settlement** refreshes the MultiHopper status. A completed route yields a receipt with the invoice reference, network, amount and available chain evidence. If a route is expired, failed or recoverable, inspect the original transfer in the provider dashboard before arranging a replacement. Reconcile the provider's fees, refunds and settlement timestamps before reporting campaign volume.
 
-The service uses Circle USDC, one destination per invoice and a single operator per deployment. The server calls the authenticated REST API. Signing keys stay in the wallet. Authenticated end-to-end execution still requires an environment-specific partner key and a funded test wallet. The automated suite uses provider and RPC fixtures, including locally signed transactions.
+The service uses Circle USDC, one destination per invoice and a single operator per deployment. The server calls the authenticated REST API. Signing keys stay in the wallet. A live devnet check through the operator API created transfer 1693 for an exact 1 USDC delivery, locked the quote, retrieved the unsigned keeper funding transaction and read back awaiting_signature. Repeat with node scripts/devnet-check.mjs and a devnet MULTIHOPPER_API_KEY. Each run creates an unsigned test transfer. The automated suite separately exercises signed broadcasts and retries with local fixtures. On-chain settlement with a funded wallet and mainnet onboarding remain outstanding.
 
 [MultiHopper quickstart](https://dev-docs.multihopper.com/quickstart) · [Transaction preparation](https://dev-docs.multihopper.com/api-reference/transfers/prepare) · [Broadcast confirmation](https://dev-docs.multihopper.com/api-reference/transfers/confirm-broadcast)
 
