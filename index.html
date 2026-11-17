@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c31">
+  <title>RemitDesk · Vendor payments</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23104435'/%3E%3Cpath d='M8 26l9-15h7l-9 15zm12 0 7-12h6l-7 12z' fill='%23daeda0'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./site.js" type="module"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to payment desk</a>
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
+    <symbol id="i-brand" viewBox="0 0 36 30"><path fill="currentColor" d="M0 26 13 4h9L9 26zm15 0L26 7h9L24 26z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3h14v18l-3-2-4 2-4-2-3 2zM8 8h8M8 12h6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><path d="M6 10h12v10H6zM8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6h7a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h8"/></symbol>
+    <symbol id="i-sol" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="m6 4-3 3h15l3-3zm-3 6 3 3h15l-3-3zm3 6-3 3h15l3-3z"/></symbol>
+  </svg>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><svg aria-hidden="true"><use href="#i-brand"/></svg>RemitDesk<span class="brand-dot">.</span></div>
+      <div class="top-actions"><span id="environment" class="environment">Connecting</span><button id="logout" class="quiet" hidden>Sign out</button></div>
+    </div>
+  </header>
+  <main id="main">
+    <div class="context"><span class="context-line"></span> Treasury workspace</div>
+    <div class="page-title"><div><h1>Payment desk<span>.</span></h1><p>Manage vendor invoices and route USDC payments on Solana.</p></div>
+      <button class="button primary" id="new-invoice" disabled><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>New invoice</button>
+    </div>
+    <div id="notice" role="status" aria-live="polite" class="notice" hidden></div>
+    <div id="loading" class="loading">Opening workspace…</div>
+    <section id="locked" class="access-panel" hidden aria-labelledby="access-title">
+      <div class="icon-tile"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg></div>
+      <h2 id="access-title">Operator access</h2><p>Enter the operator token to open this private workspace.</p>
+      <form id="access-form"><label for="operator-token">Operator token</label><div class="access-row"><input type="password" id="operator-token" required autocomplete="off"><button class="button primary">Open desk</button></div><p id="access-error" class="error" role="alert"></p></form>
+    </section>
+    <div id="workspace" hidden>
+      <section class="summary" aria-label="Invoice balances">
+        <div class="summary-primary"><div class="guilloche" aria-hidden="true"></div><div class="sum-label"><span class="usdc-icon">$</span> Open invoice value</div><div class="balance"><strong id="outstanding">0.00</strong> <span>USDC</span></div></div>
+        <div class="summary-secondary"><div class="sum-label"><span class="metric-dot amber"></span>Awaiting payment</div><strong id="outstanding-count">0</strong><span class="metric-unit">invoices</span></div>
+        <div class="summary-secondary"><div class="sum-label"><span class="metric-dot green"></span>Paid in desk</div><strong id="paid-count">0</strong><span class="metric-unit">invoices</span></div>
+      </section>
+      <div class="desk-grid">
+        <section class="queue panel" aria-labelledby="queue-title">
+          <div class="panel-heading"><div class="panel-title"><h2 id="queue-title">Invoice register</h2><span id="total-count" class="count">0</span></div></div>
+          <div class="toolbar"><div class="filters" aria-label="Filter invoices"><button data-filter="all" aria-pressed="true">All</button><button data-filter="outstanding" aria-pressed="false">Outstanding</button><button data-filter="paid" aria-pressed="false">Paid</button></div>
+            <label class="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="search" type="search" placeholder="Search invoices" aria-label="Search vendor or reference"></label></div>
+          <div id="register"></div>
+        </section>
+        <aside class="detail panel" aria-labelledby="detail-title"><div class="panel-heading"><div class="panel-title"><svg class="icon heading-icon" aria-hidden="true"><use href="#i-receipt"/></svg><h2 id="detail-title">Invoice details</h2></div></div><div id="invoice-detail"></div></aside>
+      </div>
+      <footer><span><svg class="icon" aria-hidden="true"><use href="#i-route"/></svg> MultiHopper routing</span><a id="pilot-link" hidden href="https://github.com/tanav29/remitdesk/issues/new?template=pilot.yml" target="_blank" rel="noopener noreferrer">Request a pilot ↗</a><span><svg class="icon" aria-hidden="true"><use href="#i-sol"/></svg> Solana <span class="divider">/</span> USDC</span></footer>
+    </div>
+  </main>
+  <dialog id="invoice-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-head"><h2 id="dialog-title">New vendor invoice</h2><button class="icon-button" id="close-dialog" aria-label="Close invoice form"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <form id="invoice-form">
+      <label for="vendor">Vendor name</label><input id="vendor" name="vendor" required maxlength="100" placeholder="e.g. Meridian Studio" autocomplete="organization">
+      <div class="form-pair"><div><label for="reference">Invoice reference</label><input id="reference" name="reference" required maxlength="80" placeholder="INV-1042"></div><div><label for="amount">Amount (USDC)</label><input id="amount" name="amount" required pattern="(0|[1-9][0-9]*)(\.[0-9]{1,6})?" inputmode="decimal" placeholder="0.00" title="Enter a positive USDC amount with up to six decimal places."></div></div>
+      <label for="exact-amount" class="check-label"><input id="exact-amount" type="checkbox" checked>Vendor must receive this exact amount</label>
+      <p class="hint basis-description" id="basis-description">The quote adds route fees to the amount you pay.</p>
+      <label for="recipient">Vendor’s Solana address</label><input id="recipient" name="recipient" class="mono" required pattern="[1-9A-HJ-NP-Za-km-z]{32,44}" title="Enter a 32–44 character Solana wallet address." placeholder="Recipient wallet address" spellcheck="false" autocomplete="off">
+      <p class="hint">Check the address with your vendor before creating the invoice.</p>
+      <p id="form-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" class="button secondary" id="cancel-invoice">Cancel</button><button class="button primary" id="save-invoice">Create invoice</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
