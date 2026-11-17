@@ -2,7 +2,7 @@
 
 Pay an approved vendor bill in Solana USDC and match its delivery to the invoice. Enter what the vendor is owed, preview the payer's total, and retain a receipt with the MultiHopper transfer ID and recorded chain signatures.
 
-**[Open the interactive demo](https://rawcdn.githack.com/tanav29/remitdesk/81ad7803f28fdd4c97373fb59395c864ed4e3d60/index.html)** · **[Watch the 58-second walkthrough](https://rawcdn.githack.com/tanav29/remitdesk/1dbaa829b53140edc7450e97352b83c1ca3aefe7/docs/remitdesk-demo.mp4)** · **[Request a pilot](https://github.com/tanav29/remitdesk/issues/new?template=pilot.yml)**
+**[Open the interactive demo](https://rawcdn.githack.com/tanav29/remitdesk/81ad7803f28fdd4c97373fb59395c864ed4e3d60/index.html)** · **[Watch the 58-second walkthrough](https://cdn.jsdelivr.net/gh/tanav29/remitdesk@1dbaa829b53140edc7450e97352b83c1ca3aefe7/docs/remitdesk-demo.mp4)** · **[Request a pilot](https://github.com/tanav29/remitdesk/issues/new?template=pilot.yml)**
 
 The public demo keeps sample invoices in the current browser tab. Choose **New invoice**, leave exact delivery selected, preview the quote, simulate payment and download the receipt. The sample ledger and demo video illustrate the workflow. Production customer and volume figures have yet to be established.
 
