@@ -1,0 +1,25 @@
+﻿name: Ask about a vendor payment pilot
+description: Arrange a walkthrough with the RemitDesk maintainer.
+title: Vendor invoice pilot
+labels: ["pilot"]
+body:
+  - type: markdown
+    attributes:
+      value: "This request is public. Please keep invoice references, wallet addresses, customer lists and private contact details out of this form. The maintainer can coordinate a private follow-up."
+  - type: dropdown
+    id: timing
+    attributes:
+      label: When is your next Solana USDC vendor payment run?
+      options:
+        - Within one week
+        - Within two weeks
+        - Later or exploring
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: What would you like to try?
+      placeholder: "For example, pay a contractor the exact invoice amount and reconcile the delivery with a receipt."
+    validations:
+      required: true
